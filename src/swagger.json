@@ -1,0 +1,341 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "My Admin",
+    "description": "Create and manage all users",
+    "version": "1.0.0",
+    "contact": {
+      "email": "developer@rocketseat.com"
+    }
+  },
+  "paths": {
+    "/users": {
+      "post": {
+        "tags": ["User"],
+        "summary": "Create an user",
+        "description": "Create an user in the database by informing the name and e-mail.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "email": {
+                    "type": "string"
+                  }
+                },
+                "example": {
+                  "name": "John Doe",
+                  "email": "johndoe@gmail.com"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "User created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "admin": {
+                      "type": "boolean"
+                    },
+                    "id": {
+                      "type": "string"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "email": {
+                      "type": "string"
+                    },
+                    "created_at": {
+                      "type": "string"
+                    },
+                    "updated_at": {
+                      "type": "string"
+                    }
+                  },
+                  "example": {
+                    "admin": "false",
+                    "id": "95995e8e-e0db-4fb1-947d-c1b2a3de01b5",
+                    "name": "Eduardo Henrique de Oliveira",
+                    "email": "eduardo@rocketseat.com",
+                    "created_at": "2021-07-19T03:57:27.764Z",
+                    "updated_at": "2021-07-19T03:57:27.764Z"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "E-mail already taken",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  },
+                  "example": {
+                    "error": "This e-mail has already been taken."
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": ["User"],
+        "summary": "List all users",
+        "description": "Allows admin users to get a list of all users",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "user_id",
+            "description": "The user ID",
+            "required": "true",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "admin": {
+                        "type": "boolean"
+                      },
+                      "id": {
+                        "type": "string"
+                      },
+                      "name": {
+                        "type": "string"
+                      },
+                      "email": {
+                        "type": "string"
+                      },
+                      "created_at": {
+                        "type": "string"
+                      },
+                      "updated_at": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "example": [
+                    {
+                      "admin": "false",
+                      "id": "95995e8e-e0db-4fb1-947d-c1b2a3de01b5",
+                      "name": "Eduardo Henrique de Oliveira",
+                      "email": "eduardo@rocketseat.com",
+                      "created_at": "2021-07-19T03:57:27.764Z",
+                      "updated_at": "2021-07-19T03:57:27.764Z"
+                    },  
+                    {
+                      "admin": "true",
+                      "id": "cd3b3fd7-8a94-4016-918c-12fa5979c07a",
+                      "name": "Amanda Torno de Souza",
+                      "email": "amanda@rocketseat.com",
+                      "created_at": "2021-06-19T08:15:27.764Z",
+                      "updated_at": "2021-07-10T11:30:20.764Z"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  },
+                  "example": {
+                    "error": "User not found"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/:user_id": {
+      "get": {
+        "tags": ["User"],
+        "summary": "Get one user",
+        "description": "Shows information about an specific user",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "user_id",
+            "description": "The user ID",
+            "required": "true",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "admin": {
+                      "type": "boolean"
+                    },
+                    "id": {
+                      "type": "string"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "email": {
+                      "type": "string"
+                    },
+                    "created_at": {
+                      "type": "string"
+                    },
+                    "updated_at": {
+                      "type": "string"
+                    }
+                  },
+                  "example": {
+                    "admin": "false",
+                    "id": "95995e8e-e0db-4fb1-947d-c1b2a3de01b5",
+                    "name": "Eduardo Henrique de Oliveira",
+                    "email": "eduardo@rocketseat.com",
+                    "created_at": "2021-07-19T03:57:27.764Z",
+                    "updated_at": "2021-07-19T03:57:27.764Z"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  },
+                  "example": {
+                    "error": "User not found"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/:user_id/admin": {
+      "patch": {
+        "tags": ["User"],
+        "summary": "Set an user as admin",
+        "description": "Sets an specific user as admin",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "user_id",
+            "description": "The user ID",
+            "required": "true",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "admin": {
+                      "type": "boolean"
+                    },
+                    "id": {
+                      "type": "string"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "email": {
+                      "type": "string"
+                    },
+                    "created_at": {
+                      "type": "string"
+                    },
+                    "updated_at": {
+                      "type": "string"
+                    }
+                  },
+                  "example": {
+                    "admin": "true",
+                    "id": "95995e8e-e0db-4fb1-947d-c1b2a3de01b5",
+                    "name": "Eduardo Henrique de Oliveira",
+                    "email": "eduardo@rocketseat.com",
+                    "created_at": "2021-07-19T03:57:27.764Z",
+                    "updated_at": "2021-07-20T07:12:31.764Z"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  },
+                  "example": {
+                    "error": "User not found"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
